@@ -2,6 +2,7 @@ package com.coets.application;
 
 import java.util.List;
 
+import com.coets.domain.Propeller;
 import com.coets.domain.Rocket;
 import com.coets.persistance.RocketRepository;
 
@@ -12,15 +13,23 @@ public class RocketController {
 		public RocketController() {}
 		
 		//FASE 1
-		public void createRocket(String codi, int propellers)throws Exception {
-				Rocket rocket = new Rocket(codi, propellers);
-				rockets.addRocket(rocket);				
+//		public void createRocket(String codi, int propellers)throws Exception {
+//				Rocket rocket = new Rocket(codi, propellers);
+//				rockets.addRocket(rocket);				
+//		}		
+//		
+		//FASE 2 y FASE 3
+		public void createRocket(String codi)throws Exception {
+			Rocket rocket = new Rocket(codi);	
+			rockets.addRocket(rocket);	
 		}
 		
-		//FASE 2
-		public void createRocket(String codi, int propellers, int[] power)throws Exception {
-			Rocket rocket = new Rocket(codi, propellers, power);
-			rockets.addRocket(rocket);				
+		public void addPropeller(String codi, int maxPower) {
+			for(Rocket r: this.getAllRockets()) {
+				if(r.getCodi()==codi) {
+					r.addPropeller(maxPower);
+				}
+			}			
 		}
 		
 		public List<Rocket> getAllRockets() {
@@ -28,33 +37,37 @@ public class RocketController {
 			return rockets.getAllRockets();
 		}
 		
-		public void showRockets() {
-			int[] p;
+		public void showRockets() {			
 			System.out.println("COHETES: \n");			
 			for(Rocket rocket: rockets.getAllRockets()) {
+				int pos=1;
 				System.out.println("El codigo es: " + rocket.getCodi());				
-				System.out.println("Propulsores: " + rocket.getPropellers().length);
-				System.out.println("Potencia de propulsores:");
-				p=rocket.getPropellers();
-				for(int i=1;i<=rocket.getPropellers().length;i++) {
-					System.out.println("Propulsor " + i + " potencia: "+ p[i-1]);				
+				System.out.println("Propulsores: " + rocket.getPropeller().size());
+				System.out.println("Potencia de propulsores:");				
+				for(Propeller p: rocket.getPropeller()) {
+					System.out.println("Propulsor " + pos + " potencia actual: "+ p.getPower() + " potencia máxima: "+ p.getMaxPower());
+					pos++;
 				}
 				System.out.println("\n");
 			}
-		}
-		
+		}		
 
 		public void acelerateRocket() {
 			for(Rocket rocket: rockets.getAllRockets()) {
-				rocket.acelerate();
-				System.out.println("Rocket " + rocket.getCodi() + "Acelerado");
+				rocket.changeSpeed(10);
 			}
 		}
 		
 		public void brakeRocket() {
 			for(Rocket rocket: rockets.getAllRockets()) {
-				rocket.brake();
-				System.out.println("Rocket " + rocket.getCodi() + "Frenado");
+				rocket.changeSpeed(-10);
+			}
+		}
+		
+		public void showSpeed() {
+			for(Rocket rocket: rockets.getAllRockets()) {
+				System.out.println("Rocket: " + rocket.getCodi() + " velocidad: " + rocket.getSpeed());
+				
 			}
 		}
 		
