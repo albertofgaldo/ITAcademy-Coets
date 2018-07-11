@@ -19,18 +19,33 @@ public class RocketController {
 //		}		
 //		
 		//FASE 2 y FASE 3
-		public void createRocket(String codi)throws Exception {
+		public RocketDTO createRocket(String codi)throws Exception {
+			if(codi=="") throw new Exception();
 			Rocket rocket = new Rocket(codi);	
-			rockets.addRocket(rocket);	
+			rockets.addRocket(rocket);
+			return new RocketDTO(rocket);
 		}
 		
-		public void addPropeller(String codi, int maxPower) {
+		public void addPropeller(String codi, int maxPower)throws Exception{
+			Rocket rocket = searchRocket(codi);
+			if(rocket==null)throw new Exception();				
+			rocket.addPropeller(maxPower);								
+		}
+		
+		Rocket searchRocket(String codi)throws Exception {
+			Rocket rocket = null;
 			for(Rocket r: this.getAllRockets()) {
 				if(r.getCodi()==codi) {
-					r.addPropeller(maxPower);
+					rocket=r;
 				}
 			}			
+			return rocket;				
 		}
+		
+		public RocketDTO getRocket(String codi)throws Exception {
+			return new RocketDTO(searchRocket(codi));
+		}
+		
 		
 		public List<Rocket> getAllRockets() {
 			
@@ -52,13 +67,13 @@ public class RocketController {
 			}
 		}		
 
-		public void acelerateRocket() {
+		public void acelerateRocket() throws Exception {
 			for(Rocket rocket: rockets.getAllRockets()) {
 				rocket.changeSpeed(10);
 			}
 		}
 		
-		public void brakeRocket() {
+		public void brakeRocket() throws Exception {
 			for(Rocket rocket: rockets.getAllRockets()) {
 				rocket.changeSpeed(-10);
 			}

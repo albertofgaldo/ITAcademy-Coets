@@ -17,6 +17,6 @@ public class RocketRepository {
 		
 		public void addRocket (Rocket rocket)throws Exception {
 			if(rocket==null) throw new Exception ();
-				rockets.add(rocket);			
+			rockets.add(rocket);			
 		}		
 }

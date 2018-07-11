@@ -9,15 +9,6 @@ public class Rocket {
 	protected List<Propeller> propeller;
 	
 	public Rocket() {}
-
-	//FASE 1
-//	public Rocket(String codi, int propellers) {
-//		this.codi=codi;
-//		this.propeller= new ArrayList<>();
-//		for (int i=0;i<propellers;i++) {
-//			this.propeller.add(new Propeller());
-//		}
-//	}
 	
 	//FASE 2 y FASE 3
 	public Rocket(String codi) {
@@ -25,7 +16,7 @@ public class Rocket {
 		this.propeller= new ArrayList<>();	
 	}	
 	
-	public void addPropeller(int maxPower) {
+	public void addPropeller(int maxPower)throws Exception {		
 		this.propeller.add(new Propeller(maxPower));
 	}
 	
@@ -35,18 +26,16 @@ public class Rocket {
 	public void setCodi(String codi) {
 		this.codi = codi;
 	}
-	public ArrayList<Propeller> getPropeller() {
-		return (ArrayList<Propeller>) this.propeller;
+	public List<Propeller> getPropeller() {
+		return this.propeller;
 	}
 	
-	public void changeSpeed (int speed) {
-		//System.out.println("Rocket: " + this.getCodi());
+	public void changeSpeed (int speed)throws Exception {
 		for(Propeller p: this.getPropeller()) {			
 			p.changeSpeed(speed);
 		}		
 		System.out.println("\n");
 	}
-
 	
 	public int getSpeed() {
 		int speed=0; 

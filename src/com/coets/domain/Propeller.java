@@ -10,31 +10,36 @@ public class Propeller {
 		this.maxPower=0;
 	}
 	
-	public Propeller(int maxPower){
-		this.power=0;
-		this.maxPower=maxPower;
+	public Propeller(int maxPower)throws Exception{
+		if(maxPower<0)throw new Exception();
+		this.maxPower=maxPower;		
+		this.power=0;		
 	}
 	
 	public int getPower() {		
 		return this.power;
 	}
 	
-	public void setPower(int power) {
-		this.power=power;
-	}
 	
 	public int getMaxPower() {
 		return maxPower;
 	}
 
-	public void setMaxPower(int maxPower) {
+	public void setMaxPower(int maxPower)throws Exception {
+		if(maxPower<0)throw new Exception();
 		this.maxPower = maxPower;
 	}
 	
-	public void changeSpeed(int speed) {
-		if(((this.power + speed) <= this.maxPower && speed > 0) || ((this.power + speed) >=0 && speed < 0)){
-			this.power +=speed;			
-		}
+	public void changeSpeed(int speed)throws Exception {
+		if(speed>this.getMaxPower())throw new Exception();
+	
+		if(this.getPower()+speed > this.getMaxPower()) {
+				this.power=this.getMaxPower();
+		}else if(this.getPower()+speed < 0)  {
+				this.power=0;
+		}else {
+			this.power+=speed;
+		}		
 	}
 	
 }
